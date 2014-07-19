@@ -1,10 +1,9 @@
-DfMergeTrainTest <- function () {
-  # Initialize folder variables
-  cDataFolder <- file.path('.', 'data', 'UCI HAR Dataset')
-  cTrainFolder <- file.path(cDataFolder, 'train')
-  cTestFolder  <- file.path(cDataFolder, 'test')
-  
-  
+# Initialize folder variables
+cDataFolder <- file.path('.', 'data', 'UCI HAR Dataset')
+cTrainFolder <- file.path(cDataFolder, 'train')
+cTestFolder  <- file.path(cDataFolder, 'test')
+
+DFMergeTrainTest <- function () {
   cTrainFile <- file.path(cTrainFolder, 'X_train.txt')
   cTestFile <- file.path(cTestFolder, 'X_test.txt')
   
@@ -42,4 +41,21 @@ DfMergeTrainTest <- function () {
   stopifnot(iDimAll[2] == iDimTrain[2])
   
   return (dfAll)
+}
+
+DFSetActivityLabel <- function(df){
+  cActFile <- file.path(cDataFolder, 'activity_labels.txt')
+  cTrainFile <- file.path(cTrainFolder, 'y_train.txt')
+  cTestFile <- file.path(cTestFolder, 'y_test.txt')
+    
+  # Load activity labels
+  dfAct <- read.table(cActFile, header = FALSE, col.names = c('iActId', 'fActLabel') )
+  #print(dfAct)
+  #str(dfAct)
+  
+  #dfTrainAct <- read.table(cTrainFile, )
+  
+  
+  
+  return(df)
 }
