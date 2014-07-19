@@ -34,7 +34,9 @@ str(dfActivity)
 # Check the total number of rows
 stopifnot(nrow(dfActivity) == nrow(dfMeanStd))
 
+###################################################################################################
 # 4 - Appropriately labels the data set with descriptive variable names. 
+###################################################################################################
 CLabelDataSet(names(dfActivity))
 
 # 5 - Creates a second, independent tidy data set with the average of each variable for each activity and each subject.

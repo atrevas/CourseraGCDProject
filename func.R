@@ -81,12 +81,33 @@ CLabelDataSet <- function(cNames){
   # Remove parenthesis
   cResult <- str_replace_all(cNames, '[\\(\\)]','')
     
-  # Mean
+  # Treat mean
   cResult <- str_replace(cResult, '-mean','Mean')
   
-  # Std
+  # Treat std
   cResult <- str_replace(cResult, '-std','StdDev')
   
+  # Treat ending -X, -Y, -Z
+  cResult <- str_replace(cResult, '-([XYZ])$','\\1')
+  
+  # Treat prefix 't' (time)
+  cResult <- str_replace(cResult, '^t','Time')
+  
+  # Treat prefix 'f' (Frequency)
+  cResult <- str_replace(cResult, '^f','Frequency')
+  
+  # Treat Acc abreviation
+  cResult <- str_replace(cResult, 'Acc','Acceleration')
+  
+  # Treat Gyro abreviation
+  cResult <- str_replace(cResult, 'Gyro','Gyroscope')
+  
+  # Treat Mag abreviation
+  cResult <- str_replace(cResult, 'Mag','Magnitude')
+  
+  # Check for repeated names
+  cUnique <- unique(cResult)
+  stopifnot(length(cUnique) == length(cResult))
   
   return(cResult)
 }
