@@ -64,13 +64,15 @@ DFSetActivityLabel <- function(df){
   # Check the total number of rows
   stopifnot(nrow(dfAct)  == nrow(df))
   
+  # Add the Activity Id column to the result data frame
+  dfResult <- cbind(df, dfAct)
+  str(dfResult)
+  
   # Join activity ids and labels
-  dfAct <- merge(x = dfAct, y = dfActLabel, by.x = 'ActivityId', by.y = 'ActivityId' )  
+  dfResult <- merge(x = dfResult, y = dfActLabel, by.x = 'ActivityId', by.y = 'ActivityId' )  
   
   # Check the total number of rows
-  stopifnot(nrow(dfAct)  == nrow(df))
+  stopifnot(nrow(dfResult)  == nrow(df))
   
-  dfResult <- cbind(df, dfAct)
-    
   return(dfResult)
 }
