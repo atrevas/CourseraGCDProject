@@ -76,3 +76,17 @@ DFSetActivityLabel <- function(df){
   
   return(dfResult)
 }
+
+CLabelDataSet <- function(cNames){
+  # Remove parenthesis
+  cResult <- str_replace_all(cNames, '[\\(\\)]','')
+    
+  # Mean
+  cResult <- str_replace(cResult, '-mean','Mean')
+  
+  # Std
+  cResult <- str_replace(cResult, '-std','StdDev')
+  
+  
+  return(cResult)
+}
