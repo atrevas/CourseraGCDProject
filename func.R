@@ -49,13 +49,28 @@ DFSetActivityLabel <- function(df){
   cTestFile <- file.path(cTestFolder, 'y_test.txt')
     
   # Load activity labels
-  dfAct <- read.table(cActFile, header = FALSE, col.names = c('iActId', 'fActLabel') )
-  #print(dfAct)
-  #str(dfAct)
+  dfActLabel <- read.table(cActFile, header = FALSE, col.names = c('ActivityId'
+                                                                   , 'ActivityLabel') )
   
-  #dfTrainAct <- read.table(cTrainFile, )
+  # Load activity ids for the train data
+  dfTrainAct <- read.table(cTrainFile, header = FALSE, col.names = c('ActivityId') )
   
+  # Load activity ids for the test data
+  dfTestAct <- read.table(cTestFile, header = FALSE, col.names = c('ActivityId') )
   
+  # Merge the train and test data
+  dfAct <- rbind(dfTrainAct, dfTestAct)
+        
+  # Check the total number of rows
+  stopifnot(nrow(dfAct)  == nrow(df))
   
-  return(df)
+  # Join activity ids and labels
+  dfAct <- merge(x = dfAct, y = dfActLabel, by.x = 'ActivityId', by.y = 'ActivityId' )  
+  
+  # Check the total number of rows
+  stopifnot(nrow(dfAct)  == nrow(df))
+  
+  dfResult <- cbind(df, dfAct)
+    
+  return(dfResult)
 }
