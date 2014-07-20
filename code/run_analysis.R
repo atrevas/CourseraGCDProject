@@ -15,9 +15,12 @@ str(dfHAR)
 cPattern <- "-mean\\(\\)|std\\(\\)"
 
 cNames <- colnames(dfHAR)[str_detect(colnames(dfHAR), cPattern)]
-str(cNames)
+
+# Add back the ActivityId and the Subject columns
+cNames <- c(cNames, cActivityIdColName, cSubjectColName)
 
 # Create a new data frame only with the measurements on the mean and standard deviation
+# + the ActivityId and the Subject columns
 dfMeanStd <- (dfHAR[ , cNames])
 
 str(dfMeanStd)

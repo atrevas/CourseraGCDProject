@@ -3,6 +3,7 @@ cDataFolder <- file.path('.', 'data', 'UCI HAR Dataset')
 cTrainFolder <- file.path(cDataFolder, 'train')
 cTestFolder  <- file.path(cDataFolder, 'test')
 
+# Define names for additional columns
 cActivityIdColName <- 'ActivityId'
 cSubjectColName <- 'Subject'
 
@@ -80,7 +81,7 @@ DFMergeTrainTest <- function () {
   dfResult <- rbind(dfTrain, dfTest)
   
   # Check number of total rows
-  stopifnot(nrow(dfResult == iTotalRows))
+  stopifnot(nrow(dfResult) == iTotalRows)
   
   # Check number of columns
   stopifnot(ncol(dfResult) == ncol(dfTrain))
