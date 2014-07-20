@@ -5,6 +5,7 @@ cTestFolder  <- file.path(cDataFolder, 'test')
 
 # Define names for additional columns
 cActivityIdColName <- 'ActivityId'
+cActivityLabelColName <- 'ActivityLabel'
 cSubjectColName <- 'Subject'
 
 
@@ -90,30 +91,16 @@ DFMergeTrainTest <- function () {
 }
 
 DFSetActivityLabel <- function(df){
+  
   cActFile <- file.path(cDataFolder, 'activity_labels.txt')
-  
-  cTestFile <- file.path(cTestFolder, 'y_test.txt')
-    
+      
   # Load activity labels
-  dfActLabel <- read.table(cActFile, header = FALSE, col.names = c('ActivityId'
-                                                                   , 'ActivityLabel') )
+  dfActLabel <- read.table(cActFile, header = FALSE, col.names = c(cActivityIdColName
+                                                                   , cActivityLabelColName) )
   
-  
-  # Load activity ids for the test data
-  dfTestAct <- read.table(cTestFile, header = FALSE, col.names = c('ActivityId') )
-  
-  # Merge the train and test data
-  dfAct <- rbind(dfTrainAct, dfTestAct)
-        
-  # Check the total number of rows
-  stopifnot(nrow(dfAct)  == nrow(df))
-  
-  # Add the Activity Id column to the result data frame
-  dfResult <- cbind(df, dfAct)
-  str(dfResult)
   
   # Join activity ids and labels
-  dfResult <- merge(x = dfResult, y = dfActLabel, by.x = 'ActivityId', by.y = 'ActivityId' )  
+  dfResult <- merge(x = df, y = dfActLabel, by.x = cActivityIdColName, by.y = cActivityIdColName )  
   
   # Check the total number of rows
   stopifnot(nrow(dfResult)  == nrow(df))
