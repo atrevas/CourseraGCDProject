@@ -3,6 +3,9 @@ cDataFolder <- file.path('.', 'data', 'UCI HAR Dataset')
 cTrainFolder <- file.path(cDataFolder, 'train')
 cTestFolder  <- file.path(cDataFolder, 'test')
 
+cActivityIdColName <- 'ActivityId'
+cSubjectColName <- 'Subject'
+
 
 DFLoadTrainData <- function (cFeatures) {
   
@@ -18,10 +21,10 @@ DFLoadTrainData <- function (cFeatures) {
   names(dfTrainSet) <- cFeatures
   
   # Load the training labels
-  dfTrainLabel <- read.table(cTrainLabel, header = FALSE, col.names = c('ActivityId') )
+  dfTrainLabel <- read.table(cTrainLabel, header = FALSE, col.names = c(cActivityIdColName) )
   
   # Load the subject data
-  dfTrainSubject <- read.table(cTrainSubject, header = FALSE, col.names = c('Subject'))
+  dfTrainSubject <- read.table(cTrainSubject, header = FALSE, col.names = c(cSubjectColName))
   
   # Combine the data
   dfResult <- cbind(dfTrainSet, dfTrainLabel, dfTrainSubject)
@@ -30,9 +33,32 @@ DFLoadTrainData <- function (cFeatures) {
 }
 
 
-DFMergeTrainTest <- function () {
+DFLoadTestData <- function (cFeatures) {
   
-  cTestFile <- file.path(cTestFolder, 'X_test.txt')
+  # Set file paths to load the data
+  cTestSet <- file.path(cTestFolder, 'X_test.txt')
+  cTestLabel <- file.path(cTestFolder, 'y_test.txt')
+  cTestSubject <- file.path(cTestFolder, 'subject_test.txt')
+  
+  # Load the test set
+  dfTestSet <- read.table(cTestSet, header = FALSE, stringsAsFactors = FALSE)
+  
+  # Set the columns names
+  names(dfTestSet) <- cFeatures
+  
+  # Load the test labels
+  dfTestLabel <- read.table(cTestLabel, header = FALSE, col.names = c(cActivityIdColName) )
+  
+  # Load the subject data
+  dfTestSubject <- read.table(cTestSubject, header = FALSE, col.names = c(cSubjectColName))
+  
+  # Combine the data
+  dfResult <- cbind(dfTestSet, dfTestLabel, dfTestSubject)
+  
+  return(dfResult)
+}
+
+DFMergeTrainTest <- function () {
   
   # Load the features file
   cFeaturesFile <- file.path(cDataFolder, 'features.txt')
@@ -42,30 +68,24 @@ DFMergeTrainTest <- function () {
   
   dfTrain <- DFLoadTrainData(dfFeatures$name)
   
-  # Load the test data
-  dfTest <- read.table(cTestFile, header = FALSE, stringsAsFactors = FALSE)
-  iDimTest <- dim(dfTest)
-  
+  dfTest <- DFLoadTestData(dfFeatures$name)
+    
   # Number of columns must be the same
-  stopifnot( iDimTrain[2] == iDimTest[2] )
+  stopifnot( ncol(dfTrain) == ncol(dfTest))
   
   # Store the expected total number of rows
-  iTotalRows <- iDimTrain[1] + iDimTest[1]
+  iTotalRows <- nrow(dfTrain) + nrow(dfTest)
   
   # Merge the train and test data sets
-  dfAll <- rbind(dfTrain, dfTest)
-  iDimAll <- dim(dfAll)
-  
-  # Set the names of the columns to the features values
-  names(dfAll) <- dfFeatures$name
+  dfResult <- rbind(dfTrain, dfTest)
   
   # Check number of total rows
-  stopifnot(iDimAll[1] == iTotalRows)
+  stopifnot(nrow(dfResult == iTotalRows))
   
   # Check number of columns
-  stopifnot(iDimAll[2] == iDimTrain[2])
+  stopifnot(ncol(dfResult) == ncol(dfTrain))
   
-  return (dfAll)
+  return (dfResult)
 }
 
 DFSetActivityLabel <- function(df){
