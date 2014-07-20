@@ -1,3 +1,5 @@
+library(plyr)
+
 # Initialize folder variables
 cDataFolder <- file.path('.', 'data', 'UCI HAR Dataset')
 cTrainFolder <- file.path(cDataFolder, 'train')
@@ -141,4 +143,14 @@ CLabelDataSet <- function(cNames){
   stopifnot(length(cUnique) == length(cResult))
   
   return(cResult)
+}
+
+DFAverageByActivityAndSubject <- function(df){
+  # Convert ActivityId to factor just in case
+  df$ActivityId <- as.factor(df$ActivityId)
+  
+  dfResult <- ddply(df, c(cSubjectColName, cActivityIdColName, cActivityLabelColName )
+                    , numcolwise(mean))
+  
+  return(dfResult)
 }

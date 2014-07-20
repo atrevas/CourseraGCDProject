@@ -37,6 +37,9 @@ str(dfActivity)
 # Check the total number of rows
 stopifnot(nrow(dfActivity) == nrow(dfMeanStd))
 
+# Check the total number of columns
+stopifnot(ncol(dfActivity) == ncol(dfMeanStd))
+
 ###################################################################################################
 # 4 - Appropriately labels the data set with descriptive variable names. 
 ###################################################################################################
@@ -46,6 +49,8 @@ names(dfDescriptive) <- cNewNames
 str(dfDescriptive)
 
 
-# 5 - Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-
+# 5 - Creates a second, independent tidy data set with the average of each variable for 
+# each activity and each subject.
+dfFinal <- DFAverageByActivityAndSubject(dfDescriptive)
+str(dfFinal)
 
