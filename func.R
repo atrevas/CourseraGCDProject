@@ -3,8 +3,35 @@ cDataFolder <- file.path('.', 'data', 'UCI HAR Dataset')
 cTrainFolder <- file.path(cDataFolder, 'train')
 cTestFolder  <- file.path(cDataFolder, 'test')
 
+
+DFLoadTrainData <- function (cFeatures) {
+  
+  # Set file paths to load the data
+  cTrainSet <- file.path(cTrainFolder, 'X_train.txt')
+  cTrainLabel <- file.path(cTrainFolder, 'y_train.txt')
+  cTrainSubject <- file.path(cTrainFolder, 'subject_train.txt')
+  
+  # Load the training set
+  dfTrainSet <- read.table(cTrainSet, header = FALSE, stringsAsFactors = FALSE)
+  
+  # Set the columns names
+  names(dfTrainSet) <- cFeatures
+  
+  # Load the training labels
+  dfTrainLabel <- read.table(cTrainLabel, header = FALSE, col.names = c('ActivityId') )
+  
+  # Load the subject data
+  dfTrainSubject <- read.table(cTrainSubject, header = FALSE, col.names = c('Subject'))
+  
+  # Combine the data
+  dfResult <- cbind(dfTrainSet, dfTrainLabel, dfTrainSubject)
+  
+  return(dfResult)
+}
+
+
 DFMergeTrainTest <- function () {
-  cTrainFile <- file.path(cTrainFolder, 'X_train.txt')
+  
   cTestFile <- file.path(cTestFolder, 'X_test.txt')
   
   # Load the features file
@@ -13,9 +40,7 @@ DFMergeTrainTest <- function () {
                            , stringsAsFactors = FALSE
                            , col.names = c('num', 'name'))
   
-  # Load the train data
-  dfTrain <- read.table(cTrainFile, header = FALSE, stringsAsFactors = FALSE)
-  iDimTrain <- dim(dfTrain)
+  dfTrain <- DFLoadTrainData(dfFeatures$name)
   
   # Load the test data
   dfTest <- read.table(cTestFile, header = FALSE, stringsAsFactors = FALSE)
@@ -45,15 +70,13 @@ DFMergeTrainTest <- function () {
 
 DFSetActivityLabel <- function(df){
   cActFile <- file.path(cDataFolder, 'activity_labels.txt')
-  cTrainFile <- file.path(cTrainFolder, 'y_train.txt')
+  
   cTestFile <- file.path(cTestFolder, 'y_test.txt')
     
   # Load activity labels
   dfActLabel <- read.table(cActFile, header = FALSE, col.names = c('ActivityId'
                                                                    , 'ActivityLabel') )
   
-  # Load activity ids for the train data
-  dfTrainAct <- read.table(cTrainFile, header = FALSE, col.names = c('ActivityId') )
   
   # Load activity ids for the test data
   dfTestAct <- read.table(cTestFile, header = FALSE, col.names = c('ActivityId') )
