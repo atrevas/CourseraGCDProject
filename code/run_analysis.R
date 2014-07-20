@@ -40,8 +40,11 @@ stopifnot(nrow(dfActivity) == nrow(dfMeanStd))
 ###################################################################################################
 # 4 - Appropriately labels the data set with descriptive variable names. 
 ###################################################################################################
-names(dfActivity) = CLabelDataSet(names(dfActivity))
-str(dfActivity)
+cNewNames = CLabelDataSet(names(dfActivity))
+dfDescriptive <- dfActivity
+names(dfDescriptive) <- cNewNames
+str(dfDescriptive)
+
 
 # 5 - Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
