@@ -1,7 +1,7 @@
 library(plyr)
 
 # Initialize folder variables
-cDataFolder <- file.path('.', 'data', 'UCI HAR Dataset')
+cDataFolder <- file.path('.', 'data')
 cTrainFolder <- file.path(cDataFolder, 'train')
 cTestFolder  <- file.path(cDataFolder, 'test')
 

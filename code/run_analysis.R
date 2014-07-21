@@ -37,8 +37,6 @@ str(dfActivity)
 # Check the total number of rows
 stopifnot(nrow(dfActivity) == nrow(dfMeanStd))
 
-# Check the total number of columns
-stopifnot(ncol(dfActivity) == ncol(dfMeanStd))
 
 ###################################################################################################
 # 4 - Appropriately labels the data set with descriptive variable names. 
