@@ -149,7 +149,7 @@ DFAverageByActivityAndSubject <- function(df){
   # Convert ActivityId to factor just in case
   df$ActivityId <- as.factor(df$ActivityId)
   
-  dfResult <- ddply(df, c(cSubjectColName, cActivityIdColName, cActivityLabelColName )
+  dfResult <- ddply(df, c(cSubjectColName,  cActivityLabelColName )
                     , numcolwise(mean))
   
   return(dfResult)
