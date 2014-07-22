@@ -6,54 +6,50 @@ source('func.R')
 ###################################################################################################
 # 1 - Merges the training and the test sets to create one data set.
 ###################################################################################################
-dfHAR <- DFMergeTrainTest()
-str(dfHAR)
+data <- DFMergeTrainTest()
 
 ###################################################################################################
 # 2 - Extracts only the measurements on the mean and standard deviation for each measurement. 
 ###################################################################################################
-cPattern <- "-mean\\(\\)|std\\(\\)"
+pattern <- "-mean\\(\\)|std\\(\\)"
 
-cNames <- colnames(dfHAR)[str_detect(colnames(dfHAR), cPattern)]
+col_names <- colnames(data)[str_detect(colnames(data), pattern)]
 
 # Add back the ActivityId and the Subject columns
-cNames <- c(cNames, cActivityIdColName, cSubjectColName)
+col_names <- c(col_names, cActivityIdColName, cSubjectColName)
 
 # Create a new data frame only with the measurements on the mean and standard deviation
 # + the ActivityId and the Subject columns
-dfMeanStd <- (dfHAR[ , cNames])
-
-str(dfMeanStd)
+data_mean_std <- (data[ , col_names])
 
 # Check the total number of rows
-stopifnot(nrow(dfMeanStd) == nrow(dfHAR))
+stopifnot(nrow(data_mean_std) == nrow(data))
 
 ###################################################################################################
 # 3 - Uses descriptive activity names to name the activities in the data set
 ###################################################################################################
-dfActivity <- DFSetActivityLabel(dfMeanStd)
-str(dfActivity)
+data_activity <- DFSetActivityLabel(data_mean_std)
 
 # Check the total number of rows
-stopifnot(nrow(dfActivity) == nrow(dfMeanStd))
+stopifnot(nrow(data_activity) == nrow(data_mean_std))
 
 
 ###################################################################################################
 # 4 - Appropriately labels the data set with descriptive variable names. 
 ###################################################################################################
-cNewNames = CLabelDataSet(names(dfActivity))
-dfDescriptive <- dfActivity
-names(dfDescriptive) <- cNewNames
-str(dfDescriptive)
+new_names = CLabelDataSet(names(data_activity))
+data_descriptive <- data_activity
+names(data_descriptive) <- new_names
+str(data_descriptive)
 
 
 # 5 - Creates a second, independent tidy data set with the average of each variable for 
 # each activity and each subject.
-dfFinal <- DFAverageByActivityAndSubject(dfDescriptive)
-str(dfFinal)
+data_final <- DFAverageByActivityAndSubject(data_descriptive)
+str(data_final)
 
 
 # Save the resulting data set to disk
-cResultFile <- file.path(cDataFolder, 'result.txt')
-write.table(dfFinal,cResultFile, sep = ',')
+result_file_name <- file.path(cDataFolder, 'result.txt')
+write.table(data_final, result_file_name, sep = ',')
 
