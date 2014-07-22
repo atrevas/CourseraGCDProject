@@ -52,3 +52,8 @@ str(dfDescriptive)
 dfFinal <- DFAverageByActivityAndSubject(dfDescriptive)
 str(dfFinal)
 
+
+# Save the resulting data set to disk
+cResultFile <- file.path(cDataFolder, 'result.txt')
+write.table(dfFinal,cResultFile, sep = ',')
+
