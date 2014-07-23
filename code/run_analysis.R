@@ -7,18 +7,18 @@ source('func.R')
 ###############################################################################
 # 1 - Merges the training and the test sets to create one data set.
 ###############################################################################
-data <- merge_train_est()
+data <- merge_train_test()
 
 ###############################################################################
 # 2 - Extracts only the measurements on the mean and standard deviation for 
 # each measurement. 
 ###############################################################################
-pattern <- "-mean\\(\\)|std\\(\\)"
+pattern <- "-(mean\\(\\)|std\\(\\))"
 
 col_names <- colnames(data)[str_detect(colnames(data), pattern)]
 
 # Add back the ActivityId and the Subject columns
-col_names <- c(col_names, cActivityIdColName, cSubjectColName)
+col_names <- c(col_names, activity_id_col_name, subject_col_name)
 
 # Create a new data frame only with the measurements on the mean and standard 
 # deviation + the ActivityId and the Subject columns
@@ -54,6 +54,6 @@ str(data_final)
 
 
 # Save the resulting data set to disk
-result_file_name <- file.path(cDataFolder, 'result.txt')
+result_file_name <- file.path(data_folder, 'result.txt')
 write.table(data_final, result_file_name, sep = ',')
 

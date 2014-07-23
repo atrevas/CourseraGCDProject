@@ -66,7 +66,7 @@ load_test_data <- function (features) {
   return(result_df)
 }
 
-merge_train_est <- function () {
+merge_train_test <- function () {
   
   # Load the features file
   features_file <- file.path(data_folder, 'features.txt')
