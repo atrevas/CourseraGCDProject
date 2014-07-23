@@ -1,156 +1,163 @@
 library(plyr)
 
 # Initialize folder variables
-cDataFolder <- file.path('.', 'data')
-cTrainFolder <- file.path(cDataFolder, 'train')
-cTestFolder  <- file.path(cDataFolder, 'test')
+data_folder <- file.path('.', 'data')
+train_folder <- file.path(data_folder, 'train')
+test_folder  <- file.path(data_folder, 'test')
 
 # Define names for additional columns
-cActivityIdColName <- 'ActivityId'
-cActivityLabelColName <- 'ActivityLabel'
-cSubjectColName <- 'Subject'
+activity_id_col_name <- 'ActivityId'
+activity_label_col_name <- 'ActivityLabel'
+subject_col_name <- 'Subject'
 
 
-load_train_data <- function (cFeatures) {
+load_train_data <- function (features) {
   
   # Set file paths to load the data
-  cTrainSet <- file.path(cTrainFolder, 'X_train.txt')
-  cTrainLabel <- file.path(cTrainFolder, 'y_train.txt')
-  cTrainSubject <- file.path(cTrainFolder, 'subject_train.txt')
+  train_set_file <- file.path(train_folder, 'X_train.txt')
+  train_label_file <- file.path(train_folder, 'y_train.txt')
+  train_subject_file <- file.path(train_folder, 'subject_train.txt')
   
   # Load the training set
-  dfTrainSet <- read.table(cTrainSet, header = FALSE, stringsAsFactors = FALSE)
+  train_set_df <- read.table(train_set_file, header = FALSE, stringsAsFactors = FALSE)
   
   # Set the columns names
-  names(dfTrainSet) <- cFeatures
+  names(train_set_df) <- features
   
   # Load the training labels
-  dfTrainLabel <- read.table(cTrainLabel, header = FALSE, col.names = c(cActivityIdColName) )
+  train_label_df <- read.table(train_label_file, header = FALSE
+                             , col.names = c(activity_id_col_name) )
   
   # Load the subject data
-  dfTrainSubject <- read.table(cTrainSubject, header = FALSE, col.names = c(cSubjectColName))
+  train_subject_df <- read.table(train_subject_file, header = FALSE
+                               , col.names = c(subject_col_name))
   
   # Combine the data
-  dfResult <- cbind(dfTrainSet, dfTrainLabel, dfTrainSubject)
+  result_df <- cbind(train_set_df, train_label_df, train_subject_df)
   
-  return(dfResult)
+  return(result_df)
 }
 
 
-load_test_data <- function (cFeatures) {
+load_test_data <- function (features) {
   
   # Set file paths to load the data
-  cTestSet <- file.path(cTestFolder, 'X_test.txt')
-  cTestLabel <- file.path(cTestFolder, 'y_test.txt')
-  cTestSubject <- file.path(cTestFolder, 'subject_test.txt')
+  test_set_file <- file.path(test_folder, 'X_test.txt')
+  test_label_file <- file.path(test_folder, 'y_test.txt')
+  test_subject_file <- file.path(test_folder, 'subject_test.txt')
   
   # Load the test set
-  dfTestSet <- read.table(cTestSet, header = FALSE, stringsAsFactors = FALSE)
+  test_set_df <- read.table(test_set_file, header = FALSE, stringsAsFactors = FALSE)
   
   # Set the columns names
-  names(dfTestSet) <- cFeatures
+  names(test_set_df) <- features
   
   # Load the test labels
-  dfTestLabel <- read.table(cTestLabel, header = FALSE, col.names = c(cActivityIdColName) )
+  test_label_df <- read.table(test_label_file, header = FALSE
+                              , col.names = c(activity_id_col_name) )
   
   # Load the subject data
-  dfTestSubject <- read.table(cTestSubject, header = FALSE, col.names = c(cSubjectColName))
+  test_subject_df <- read.table(test_subject_file, header = FALSE
+                                , col.names = c(subject_col_name))
   
   # Combine the data
-  dfResult <- cbind(dfTestSet, dfTestLabel, dfTestSubject)
+  result_df <- cbind(test_set_df, test_label_df, test_subject_df)
   
-  return(dfResult)
+  return(result_df)
 }
 
 merge_train_est <- function () {
   
   # Load the features file
-  cFeaturesFile <- file.path(cDataFolder, 'features.txt')
-  dfFeatures <- read.table(cFeaturesFile, header = FALSE
+  features_file <- file.path(data_folder, 'features.txt')
+  features_df <- read.table(features_file, header = FALSE
                            , stringsAsFactors = FALSE
                            , col.names = c('num', 'name'))
   
-  dfTrain <- load_train_data(dfFeatures$name)
+  train_df <- load_train_data(features_df$name)
   
-  dfTest <- load_test_data(dfFeatures$name)
+  test_df <- load_test_data(features_df$name)
     
   # Number of columns must be the same
-  stopifnot( ncol(dfTrain) == ncol(dfTest))
+  stopifnot( ncol(train_df) == ncol(test_df))
   
   # Store the expected total number of rows
-  iTotalRows <- nrow(dfTrain) + nrow(dfTest)
+  total_rows <- nrow(train_df) + nrow(test_df)
   
   # Merge the train and test data sets
-  dfResult <- rbind(dfTrain, dfTest)
+  result_df <- rbind(train_df, test_df)
   
   # Check number of total rows
-  stopifnot(nrow(dfResult) == iTotalRows)
+  stopifnot(nrow(result_df) == total_rows)
   
   # Check number of columns
-  stopifnot(ncol(dfResult) == ncol(dfTrain))
+  stopifnot(ncol(result_df) == ncol(train_df))
   
-  return (dfResult)
+  return (result_df)
 }
 
 set_activity_labels <- function(df){
   
-  cActFile <- file.path(cDataFolder, 'activity_labels.txt')
+  activity_file <- file.path(data_folder, 'activity_labels.txt')
       
   # Load activity labels
-  dfActLabel <- read.table(cActFile, header = FALSE, col.names = c(cActivityIdColName
-                                                                   , cActivityLabelColName) )
+  activity_df <- read.table(activity_file, header = FALSE
+                           , col.names = c(activity_id_col_name
+                              , activity_label_col_name) )
   
   
   # Join activity ids and labels
-  dfResult <- merge(x = df, y = dfActLabel, by.x = cActivityIdColName, by.y = cActivityIdColName )  
+  result_df <- merge(x = df, y = activity_df, by.x = activity_id_col_name
+                    , by.y = activity_id_col_name )  
   
   # Check the total number of rows
-  stopifnot(nrow(dfResult)  == nrow(df))
+  stopifnot(nrow(result_df)  == nrow(df))
   
-  return(dfResult)
+  return(result_df)
 }
 
-label_data_set <- function(cNames){
+label_data_set <- function(names){
   # Remove parenthesis
-  cResult <- str_replace_all(cNames, '[\\(\\)]','')
+  result <- str_replace_all(names, '[\\(\\)]','')
     
   # Treat mean
-  cResult <- str_replace(cResult, '-mean','Mean')
+  result <- str_replace(result, '-mean','Mean')
   
   # Treat std
-  cResult <- str_replace(cResult, '-std','StdDev')
+  result <- str_replace(result, '-std','StdDev')
   
   # Treat ending -X, -Y, -Z
-  cResult <- str_replace(cResult, '-([XYZ])$','\\1')
+  result <- str_replace(result, '-([XYZ])$','\\1')
   
   # Treat prefix 't' (time)
-  cResult <- str_replace(cResult, '^t','Time')
+  result <- str_replace(result, '^t','Time')
   
   # Treat prefix 'f' (Frequency)
-  cResult <- str_replace(cResult, '^f','Frequency')
+  result <- str_replace(result, '^f','Frequency')
   
   # Treat Acc abreviation
-  cResult <- str_replace(cResult, 'Acc','Acceleration')
+  result <- str_replace(result, 'Acc','Acceleration')
   
   # Treat Gyro abreviation
-  cResult <- str_replace(cResult, 'Gyro','Gyroscope')
+  result <- str_replace(result, 'Gyro','Gyroscope')
   
   # Treat Mag abreviation
-  cResult <- str_replace(cResult, 'Mag','Magnitude')
+  result <- str_replace(result, 'Mag','Magnitude')
   
   # Check for repeated names
-  cUnique <- unique(cResult)
-  stopifnot(length(cUnique) == length(cResult))
+  unique_test <- unique(result)
   
-  return(cResult)
+  stopifnot(length(unique_test) == length(result))
+  
+  return(result)
 }
 
 average_by_activity_and_subject <- function(df){
   # Convert ActivityId to factor just in case
   df$ActivityId <- as.factor(df$ActivityId)
   
-  dfResult <- ddply(df, c(cSubjectColName,  cActivityLabelColName )
+  result_df <- ddply(df, c(subject_col_name,  activity_label_col_name )
                     , numcolwise(mean))
   
-  return(dfResult)
+  return(result_df)
 }
