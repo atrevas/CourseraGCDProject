@@ -11,7 +11,7 @@ cActivityLabelColName <- 'ActivityLabel'
 cSubjectColName <- 'Subject'
 
 
-DFLoadTrainData <- function (cFeatures) {
+load_train_data <- function (cFeatures) {
   
   # Set file paths to load the data
   cTrainSet <- file.path(cTrainFolder, 'X_train.txt')
@@ -37,7 +37,7 @@ DFLoadTrainData <- function (cFeatures) {
 }
 
 
-DFLoadTestData <- function (cFeatures) {
+load_test_data <- function (cFeatures) {
   
   # Set file paths to load the data
   cTestSet <- file.path(cTestFolder, 'X_test.txt')
@@ -62,7 +62,7 @@ DFLoadTestData <- function (cFeatures) {
   return(dfResult)
 }
 
-DFMergeTrainTest <- function () {
+merge_train_est <- function () {
   
   # Load the features file
   cFeaturesFile <- file.path(cDataFolder, 'features.txt')
@@ -70,9 +70,9 @@ DFMergeTrainTest <- function () {
                            , stringsAsFactors = FALSE
                            , col.names = c('num', 'name'))
   
-  dfTrain <- DFLoadTrainData(dfFeatures$name)
+  dfTrain <- load_train_data(dfFeatures$name)
   
-  dfTest <- DFLoadTestData(dfFeatures$name)
+  dfTest <- load_test_data(dfFeatures$name)
     
   # Number of columns must be the same
   stopifnot( ncol(dfTrain) == ncol(dfTest))
@@ -92,7 +92,7 @@ DFMergeTrainTest <- function () {
   return (dfResult)
 }
 
-DFSetActivityLabel <- function(df){
+set_activity_labels <- function(df){
   
   cActFile <- file.path(cDataFolder, 'activity_labels.txt')
       
@@ -110,7 +110,7 @@ DFSetActivityLabel <- function(df){
   return(dfResult)
 }
 
-CLabelDataSet <- function(cNames){
+label_data_set <- function(cNames){
   # Remove parenthesis
   cResult <- str_replace_all(cNames, '[\\(\\)]','')
     
@@ -145,7 +145,7 @@ CLabelDataSet <- function(cNames){
   return(cResult)
 }
 
-DFAverageByActivityAndSubject <- function(df){
+average_by_activity_and_subject <- function(df){
   # Convert ActivityId to factor just in case
   df$ActivityId <- as.factor(df$ActivityId)
   
