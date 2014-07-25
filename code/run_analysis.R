@@ -1,7 +1,7 @@
 # make.names
 library(stringr)
 
-source('func.R')
+source(file.path('.','code','func.R'))
 
 
 ###############################################################################
@@ -13,16 +13,9 @@ data <- merge_train_test()
 # 2 - Extracts only the measurements on the mean and standard deviation for 
 # each measurement. 
 ###############################################################################
-pattern <- "-(mean\\(\\)|std\\(\\))"
 
-col_names <- colnames(data)[str_detect(colnames(data), pattern)]
 
-# Add back the ActivityId and the Subject columns
-col_names <- c(col_names, activity_id_col_name, subject_col_name)
-
-# Create a new data frame only with the measurements on the mean and standard 
-# deviation + the ActivityId and the Subject columns
-data_mean_std <- (data[ , col_names])
+data_mean_std <- extract_mean_std(data)
 
 # Check the total number of rows
 stopifnot(nrow(data_mean_std) == nrow(data))

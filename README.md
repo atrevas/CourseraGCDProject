@@ -21,6 +21,7 @@ The task has been divided in separated functions. Each function solves part of t
 * load_train_data: load the train data set into memory.
 * load_test_data: load the test data set into memory.
 * merge_train_test: merge the train and the test data sets.
+* extract_mean_std: extracts only the measurements on the mean and standard deviation.
 * set_activity_labels: set the names of the activies in the data set.
 * label_data_set: label the data set with descriptive variable names.
 * average_by_activity_and_subject: create the final data set with the average of each variable.

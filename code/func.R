@@ -96,6 +96,21 @@ merge_train_test <- function () {
   return (result_df)
 }
 
+extract_mean_std <- function (df) {
+  pattern <- "-(mean\\(\\)|std\\(\\))"
+  
+  col_names <- colnames(df)[str_detect(colnames(df), pattern)]
+  
+  # Add back the ActivityId and the Subject columns
+  col_names <- c(col_names, activity_id_col_name, subject_col_name)
+  
+  # Create a new data frame only with the measurements on the mean and standard 
+  # deviation + the ActivityId and the Subject columns
+  result <- (df[ , col_names])
+  
+  return(result)
+}
+
 set_activity_labels <- function(df){
   
   activity_file <- file.path(data_folder, 'activity_labels.txt')
