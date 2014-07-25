@@ -1,5 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
-data/
+data/train/Inertial Signals
+data/test/Inertial Signals
 *.html
