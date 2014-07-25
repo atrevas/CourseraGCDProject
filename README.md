@@ -16,7 +16,7 @@ There are two source code files in this project:
 
 ## Functions
 
-The job at hand has been divided in separated funcitons. Each function solves part of the overall problem.
+The task has been divided in separated functions. Each function solves part of the overall problem.
 
 * load_train_data: load the train data set into memory.
 * load_test_data: load the test data set into memory.
