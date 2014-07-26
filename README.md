@@ -41,13 +41,13 @@ The task has been divided in separated functions. Each function solves part of t
 In order to use these scripts you will have to:
 
 * set the working directoy in R to the the main directory in which the repository is located.
-* have the data uncompressed and located under the '.data/' directory.
+* have the data uncompressed and located under the *.data/* directory.
 * run the run_analysis.R script to generate the final result data set.
 
 ## What the script will do
 
 The script will read the raw train and test data from the data folder and apply a series of transformations that will merge the two data sets, keep only the variables related to means and standard deviations, associate an activity label to each observation and aggregate the data by subject and activity, calculating means for all remaining variables.
-The final result will be save in a file named 'result.txt' under the data folder.
+The final result will be saved in a file named *result.txt* under the data folder.
 
 
 
