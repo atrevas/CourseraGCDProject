@@ -26,3 +26,12 @@ The task has been divided in separated functions. Each function solves part of t
 * label_data_set: label the data set with descriptive variable names.
 * average_by_activity_and_subject: create the final data set with the average of each variable.
 
+## Instructions
+
+In order to use these scripts you will have to:
+
+* set the working directoy in R to the the main directory in which the repository is located.
+* have the data uncompressed and located under the '.data/' directory.
+* run the run_analysis.R script to generate the final result data set.
+
+
