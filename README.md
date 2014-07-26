@@ -18,11 +18,11 @@ The objective of this project is to prepare tidy data that can be used for later
 
 ## Source code
 
-There are two source code files in this project:
+The R source code files are located under the *./code* directory. There are two source code files in this project:
 
-* The run_analysis.R file contains the main code that calls all the necessary functions
+* The *./code/run_analysis.R* file contains the main code that calls all the necessary functions.
 
-* The func.R file contains the code of the functions that have been written to do the job.
+* The *./code/func.R* file contains the code of the functions that have been written to do the job.
 
 ## Functions
 
@@ -40,14 +40,14 @@ The task has been divided in separated functions. Each function solves part of t
 
 In order to use these scripts you will have to:
 
-* set the working directoy in R to the the main directory in which the repository is located.
-* have the data uncompressed and located under the *.data/* directory.
-* run the run_analysis.R script to generate the final result data set.
+* set the working directory in R to the the main directory in which the repository is located.
+* have the data uncompressed and located under the *./data* directory.
+* run the *./code/run_analysis.R* script to generate the final result data set.
 
 ## What the script will do
 
 The script will read the raw train and test data from the data folder and apply a series of transformations that will merge the two data sets, keep only the variables related to means and standard deviations, associate an activity label to each observation and aggregate the data by subject and activity, calculating means for all remaining variables.
-The final result will be saved in a file named *result.txt* under the data folder.
+The final result will be saved in a file named *result.txt* under the data directory.
 
 
 
