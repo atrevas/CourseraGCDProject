@@ -1,4 +1,5 @@
-library(plyr)
+library(stringr)  # For the str_detect, str_replace_all and str_replace functions
+library(plyr)     # For the ddply fcuntion
 
 # Initialize folder variables
 data_folder <- file.path('.', 'data')

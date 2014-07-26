@@ -1,7 +1,4 @@
-library(stringr)
-
-source(file.path('.','code','func.R'))
-
+source(file.path('.','code','func.R')) # Includes the ./code/func.R script
 
 ###############################################################################
 # 1 - Merges the training and the test sets to create one data set.
@@ -12,8 +9,6 @@ data <- merge_train_test()
 # 2 - Extracts only the measurements on the mean and standard deviation for 
 # each measurement. 
 ###############################################################################
-
-
 data_mean_std <- extract_mean_std(data)
 
 # Check the total number of rows
@@ -34,16 +29,12 @@ stopifnot(nrow(data_activity) == nrow(data_mean_std))
 new_names = label_data_set(names(data_activity))
 data_descriptive <- data_activity
 names(data_descriptive) <- new_names
-str(data_descriptive)
-
 
 ###############################################################################
 # 5 - Creates a second, independent tidy data set with the average of each 
 # variable for each activity and each subject.
 ###############################################################################
 data_final <- average_by_activity_and_subject(data_descriptive)
-str(data_final)
-
 
 # Save the resulting data set to disk
 result_file_name <- file.path(data_folder, 'result.txt')
