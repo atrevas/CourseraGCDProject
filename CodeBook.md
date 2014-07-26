@@ -21,6 +21,7 @@ The *ActivityLabel* variable describes the activity being performed by each subj
 
 ## Measurement Variables
 
+The measurement variables included in the result file are the averages of each variable which has been extracted from the raw data set, aggregated by subject and activity.
 
 ## List of all variables
 

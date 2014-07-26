@@ -1,4 +1,3 @@
-# make.names
 library(stringr)
 
 source(file.path('.','code','func.R'))
