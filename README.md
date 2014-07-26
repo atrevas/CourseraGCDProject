@@ -34,4 +34,16 @@ In order to use these scripts you will have to:
 * have the data uncompressed and located under the '.data/' directory.
 * run the run_analysis.R script to generate the final result data set.
 
+## Data Source
+
+* The original data set can be obtained from this site:
+
+    http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+    
+* The data for the project can be downloaded from:
+
+    https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+
+
 
