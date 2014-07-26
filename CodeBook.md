@@ -19,6 +19,9 @@ The *ActivityLabel* variable describes the activity being performed by each subj
 | 5 | STANDING |
 | 6 | LAYING |
 
+## Measurement Variables
+
+
 ## List of all variables
 
 The table below lists the variables in the sequence they appear in the *result.txt* file.

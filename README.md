@@ -49,5 +49,9 @@ In order to use these scripts you will have to:
 The script will read the raw train and test data from the data folder and apply a series of transformations that will merge the two data sets, keep only the variables related to means and standard deviations, associate an activity label to each observation and aggregate the data by subject and activity, calculating means for all remaining variables.
 The final result will be saved in a file named *result.txt* under the data directory.
 
+## References
+
+[1] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
+
 
 
