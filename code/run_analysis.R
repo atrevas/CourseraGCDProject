@@ -38,5 +38,5 @@ data_final <- average_by_activity_and_subject(data_descriptive)
 
 # Save the resulting data set to disk
 result_file_name <- file.path(data_folder, 'result.txt')
-write.table(data_final, result_file_name, sep = ',')
+write.table(data_final, result_file_name, sep = ',', row.names = FALSE)
 

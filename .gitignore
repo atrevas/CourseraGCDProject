@@ -5,3 +5,4 @@ data/train/Inertial Signals
 data/test/Inertial Signals
 *.html
 ~$CookBook.xlsx
+CodeBook.xlsx
